@@ -122,8 +122,6 @@ app.post("/delete", function(req, res) {
 
   const listName=req.body.listName;
 
-  console.log("Actual list: "+req.body.list);
-
   if(listName === "Today"){
     Item.findByIdAndRemove(req.body.checkbox, function(err) {
       if (err) {
@@ -136,7 +134,6 @@ app.post("/delete", function(req, res) {
   }else{
     List.findOne( {name:listName},function(err, foundList) {
       if (!err) {
-        console.log("Founded list: "+foundList.items);
         foundList.items.pull({_id:req.body.checkbox});
         foundList.save();
         res.redirect("/"+listName);
