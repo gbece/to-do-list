@@ -18,10 +18,8 @@ app.use(express.static("public"));
 
 //mongoose.set('strictQuery', false); //if you want to prepare for this change.
 mongoose.set('strictQuery', true); //Or use `mongoose.set('strictQuery', true);` to suppress this warning.
-mongoose.connect("mongodb://0.0.0.0:27017/todolistDB", {
-  useUnifiedTopology: true,
-  useNewUrlParser: true
-});
+//mongoose.connect("mongodb://0.0.0.0:27017/todolistDB", {  useUnifiedTopology: true, useNewUrlParser: true});  // For a local database
+mongoose.connect("mongodb+srv://admin-gonzalo:test1234@cluster0.ina3ysf.mongodb.net/todolistDB", {  useUnifiedTopology: true, useNewUrlParser: true});
 
 const itemsSchema = new mongoose.Schema({
   name: {
@@ -175,6 +173,11 @@ app.get("/about", function(req, res) {
   res.render("about");
 });
 
-app.listen(3000, function() {
+let port = process.env.PORT;
+if (port == null || port == "") {
+  port = 3000;
+}
+
+app.listen(port, function() {
   console.log("Server started on port 3000");
 });
